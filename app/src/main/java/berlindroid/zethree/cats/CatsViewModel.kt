@@ -10,6 +10,7 @@ import berlindroid.zethree.cats.view.CatUiModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import retrofit2.Retrofit
@@ -22,17 +23,19 @@ sealed class CatState {
     data class CatsFound(val cats: List<CatUiModel>) : CatState()
 }
 
+@ExperimentalSerializationApi
 class CatsViewModel : ViewModel() {
+    private val json = Json { ignoreUnknownKeys = true }
+
     // TODO: Use DI
     private val repository: CatApi by lazy {
         Retrofit
             .Builder()
             .baseUrl("https://api.thecatapi.com/v1/")
             .addConverterFactory(
-                Json { ignoreUnknownKeys = true }
-                    .asConverterFactory(
-                        MediaType.get("application/json")
-                    )
+                json.asConverterFactory(
+                    MediaType.get("application/json")
+                )
             ).build()
             .create(CatApi::class.java)
     }

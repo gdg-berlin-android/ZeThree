@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 
 data class CatUiModel(
@@ -27,9 +28,10 @@ data class CatUiModel(
     val name: String
 )
 
-@ExperimentalFoundationApi
 @Preview
 @Composable
+@ExperimentalCoilApi
+@ExperimentalFoundationApi
 fun CatsUi(
     cats: List<CatUiModel> = emptyList()
 ) {
@@ -44,6 +46,7 @@ fun CatsUi(
 
 @Preview
 @Composable
+@ExperimentalCoilApi
 fun CatUi(
     imageUrl: String = "https://www.example.com/image.jpg",
     name: String = "Pete"

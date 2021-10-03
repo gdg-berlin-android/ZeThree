@@ -36,8 +36,12 @@ import berlindroid.zethree.cats.CatState.NoInternet
 import berlindroid.zethree.cats.CatsViewModel
 import berlindroid.zethree.cats.view.CatsUi
 import berlindroid.zethree.ui.theme.ZeThreeTheme
+import coil.annotation.ExperimentalCoilApi
+import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
+@ExperimentalSerializationApi
 class MainActivity : ComponentActivity() {
 
     private val viewModel: CatsViewModel by viewModels()
