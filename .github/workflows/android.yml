@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  release:
 
     runs-on: ubuntu-latest
 
@@ -19,7 +19,47 @@ jobs:
           distribution: 'adopt'
           cache: gradle
 
+      - name: Pull the release keystore
+        env:
+          KEYSTORE_URL: ${{ secrets.KEYSTORE_URL }}
+        run: curl $KEYSTORE_URL -o keystore/zeapp-keystore
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build all types
+      - name: Build and test everything
         run: ./gradlew build
+
+      - name: Sign the app with the new key
+        env:
+          KEYSTORE_FILE: ../keystore/zeapp-keystore
+          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.KEY_PASS }}
+        run: ./gradlew clean assembleRelease
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Create a GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release by @$GITHUB_ACTOR
+          draft: false
+          prerelease: false
+
+      - name: Upload Release APK
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: apk/app-release.apk
+          asset_name: ze-app-3.apk
+          asset_content_type: application/zip
