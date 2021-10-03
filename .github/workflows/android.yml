@@ -19,6 +19,15 @@ jobs:
           distribution: 'adopt'
           cache: gradle
 
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2/repository
+          key: ${{ runner.os }}-dependency-cache
+
       - name: Pull the release keystore
         env:
           KEYSTORE_URL: ${{ secrets.KEYSTORE_URL }}
@@ -37,29 +46,11 @@ jobs:
           KEY_PASS: ${{ secrets.KEY_PASS }}
         run: ./gradlew clean assembleRelease
 
-      - name: Upload APK as artifact
-        uses: actions/upload-artifact@v1
+      - name: Upload binaries to a release
+        uses: svenstaro/upload-release-action@v2
         with:
-          name: apk
-          path: app/build/outputs/apk/release/app-release.apk
-
-      - name: Create a GitHub release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release by @$GITHUB_ACTOR
-          draft: false
-          prerelease: false
-
-      - name: Upload Release APK
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: apk/app-release.apk
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: app/build/outputs/apk/release/app-release.apk
           asset_name: ze-app-3.apk
-          asset_content_type: application/zip
+          tag: ${{ github.run_id }}
+          overwrite: true
