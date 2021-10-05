@@ -1,4 +1,4 @@
-package berlindroid.zethree.ui.theme
+package berlindroid.zethree.cats.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

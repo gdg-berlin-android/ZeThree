@@ -1,4 +1,4 @@
-package berlindroid.zethree.ui.theme
+package berlindroid.zethree.cats.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
