@@ -32,19 +32,6 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/main_cat_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCatsClicked"
-                    android:text="😻 !! CATS!! 😻" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="doYourThingClicked"
-                    android:text="Do your thing" />
-
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -60,10 +47,19 @@
                         android:text="Hey there\nPlease choose one of the options here:" />
                 </RelativeLayout>
 
+                <Button
+                    android:id="@+id/main_cat_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onCatsClicked"
+                    android:text="😻 !! CATS!! 😻" />
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="doYourThingClicked"
+                    android:text="Do your thing" />
             </LinearLayout>
         </ScrollView>
-
     </LinearLayout>
-
 </FrameLayout>
