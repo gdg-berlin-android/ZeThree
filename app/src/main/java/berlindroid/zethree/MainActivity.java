@@ -25,12 +25,12 @@ public class MainActivity extends Activity {
 
     @Override public void onResume() {
         findViewById(R.id.main_cat_button).setOnLongClickListener(
-                view -> {
-                    onCatsLongClicked(
-                            findViewById(R.id.main_cat_button)
-                    );
-                    return true;
-                }
+            view -> {
+                onCatsLongClicked(
+                    findViewById(R.id.main_cat_button)
+                );
+                return true;
+            }
         );
 
         super.onResume();
@@ -42,7 +42,17 @@ public class MainActivity extends Activity {
 
     public void onCatsLongClicked(View view) {
         final List<String> cats = new ArrayList<>();
-        cats.add("😻");cats.add("😺");cats.add("😸");cats.add("😹");cats.add("😼");cats.add("😽");cats.add("🙀");cats.add("😿");cats.add("😾");cats.add("🐱");cats.add("🐈");
+        cats.add("😻");
+        cats.add("😺");
+        cats.add("😸");
+        cats.add("😹");
+        cats.add("😼");
+        cats.add("😽");
+        cats.add("🙀");
+        cats.add("😿");
+        cats.add("😾");
+        cats.add("🐱");
+        cats.add("🐈");
 
         final Random r = new Random();
         final int width = 1_000;
@@ -65,9 +75,16 @@ public class MainActivity extends Activity {
 
     public void doYourThingClicked(View view) {
         Toast.makeText(
-                this,
-                "Hey, do what ever you want, you got 15 minutes!\n\nNo idea what to do? Look behind you!",
-                Toast.LENGTH_LONG
+            this,
+            "Hey, do what ever you want, you got 15 minutes!\n\nNo idea what to do? Look behind " +
+                "you!",
+            Toast.LENGTH_LONG
         ).show();
     }
+
+    public void checkForUpdates(View view) {
+        Intent i = new Intent(this, UpdateActivity.class);
+        startActivity(i);
+    }
+
 }

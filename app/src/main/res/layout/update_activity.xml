@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:textSize="16sp"
+        android:fontFamily="casual"
+        android:textStyle="bold"
+        android:text="I am checking..."
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/updateWaitText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wait some more."
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#FF0000"
+        android:fontFamily="sans-serif-black"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

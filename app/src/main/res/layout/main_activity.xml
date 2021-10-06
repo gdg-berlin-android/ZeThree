@@ -59,6 +59,12 @@
                     android:layout_height="wrap_content"
                     android:onClick="doYourThingClicked"
                     android:text="Do your thing" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="checkForUpdates"
+                    android:text="Check for updates! NOW!" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
