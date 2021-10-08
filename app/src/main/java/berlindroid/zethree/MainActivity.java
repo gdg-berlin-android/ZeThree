@@ -9,18 +9,26 @@ import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import androidx.annotation.Nullable;
+import androidx.work.BackoffPolicy;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import berlindroid.zethree.cats.CatsActivity;
+import berlindroid.zethree.util.UpdateHandlerControllerManagerRefresher;
 
 public class MainActivity extends Activity {
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
+
+        scheduleUpdates();
     }
 
     @Override public void onResume() {
@@ -85,6 +93,24 @@ public class MainActivity extends Activity {
     public void checkForUpdates(View view) {
         Intent i = new Intent(this, UpdateActivity.class);
         startActivity(i);
+    }
+
+    public void scheduleUpdates() {
+        PeriodicWorkRequest findNewApkRequest = new PeriodicWorkRequest.Builder(
+            UpdateHandlerControllerManagerRefresher.class,
+            Duration.ofMinutes(60),
+            Duration.ofMinutes(15)
+        )
+            .setBackoffCriteria(BackoffPolicy.LINEAR, Duration.ofMinutes(20))
+            .build();
+
+        WorkManager
+            .getInstance(this)
+            .enqueueUniquePeriodicWork(
+                "app_updater_background",
+                ExistingPeriodicWorkPolicy.KEEP,
+                findNewApkRequest
+            );
     }
 
 }

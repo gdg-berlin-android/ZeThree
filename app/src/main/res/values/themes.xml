@@ -3,5 +3,7 @@
 
     <style name="Theme.ZeThree" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:colorControlNormal">@color/black</item>
     </style>
+
 </resources>

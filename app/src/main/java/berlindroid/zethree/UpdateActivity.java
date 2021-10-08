@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import berlindroid.zethree.util.LowQualityUpdateDownloader;
-import berlindroid.zethree.util.LowQualityUpdateDownloader.ResolvedApkUrl;
+import berlindroid.zethree.util.LowQualityUpdateDownloader.ApkResolution;
 
 public class UpdateActivity extends Activity {
 
@@ -32,8 +32,8 @@ public class UpdateActivity extends Activity {
         //noinspection deprecation
         new AsyncTask<Void, Void, Void>() {
             @Override protected Void doInBackground(Void... voids) {
-                // cause some fake delay to prevent rate-limiter from kicking in
-                try { Thread.sleep(5000); } catch (InterruptedException ignored) {}
+                // cause some fake delay to prevent GitHub's rate-limiter from kicking in
+                try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
                 new Handler(Looper.getMainLooper()).post(
                     () -> findViewById(R.id.updateWaitText).setVisibility(View.VISIBLE)
                 );
@@ -44,38 +44,37 @@ public class UpdateActivity extends Activity {
         //noinspection deprecation
         new AsyncTask<Void, Void, Void>() {
             @Override protected Void doInBackground(Void... voids) {
-                LowQualityUpdateDownloader downloader =
-                    new LowQualityUpdateDownloader(UpdateActivity.this);
-                ResolvedApkUrl latestApkData = downloader.getLatestApkUrl(
-                    "https://api.github.com/repos/gdg-berlin-android/ZeThree/releases"
-                );
+                ApkResolution result = LowQualityUpdateDownloader.resolveLatestApk();
 
                 new Handler(Looper.getMainLooper()).post(
                     () -> {
-                        if (latestApkData == null) {
-                            Toast.makeText(
-                                UpdateActivity.this,
-                                "Can't fetch the update",
-                                Toast.LENGTH_LONG
-                            ).show();
-                        } else if (BuildConfig.VERSION_NAME.equals(latestApkData.appVersion)) {
-                            Toast.makeText(
-                                UpdateActivity.this,
-                                "Already at the latest version",
-                                Toast.LENGTH_LONG
-                            ).show();
-                        } else {
-                            Toast.makeText(
-                                UpdateActivity.this,
-                                "Install the downloaded file",
-                                Toast.LENGTH_LONG
-                            ).show();
+                        switch (result.status) {
+                            case FAILED:
+                                Toast.makeText(
+                                    UpdateActivity.this,
+                                    "Can't fetch the update: " + result.errorMessage,
+                                    Toast.LENGTH_LONG
+                                ).show();
+                                break;
+                            case APK_AVAILABLE:
+                                Toast.makeText(
+                                    UpdateActivity.this,
+                                    "Next: Install the downloaded file",
+                                    Toast.LENGTH_LONG
+                                ).show();
 
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(latestApkData.url));
-                            startActivity(i);
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(result.url));
+                                startActivity(i);
+                                break;
+                            case ALREADY_LATEST:
+                                Toast.makeText(
+                                    UpdateActivity.this,
+                                    "Already at the latest version: v" + result.appVersion,
+                                    Toast.LENGTH_LONG
+                                ).show();
+                                break;
                         }
-
                         UpdateActivity.this.finish();
                     }
                 );

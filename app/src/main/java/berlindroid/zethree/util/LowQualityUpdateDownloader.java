@@ -1,9 +1,7 @@
 package berlindroid.zethree.util;
 
-import android.app.Activity;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
+import android.util.Log;
+import android.util.Pair;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,14 +18,14 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import berlindroid.zethree.BuildConfig;
+
 public class LowQualityUpdateDownloader {
 
-    private final Activity activity;
-
-    public LowQualityUpdateDownloader(Activity activity) {
-        super();
-        this.activity = activity;
-    }
+    private static final String RELEASES_URL =
+        "https://api.github.com/repos/gdg-berlin-android/ZeThree/releases";
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private static class Asset {
@@ -42,50 +40,93 @@ public class LowQualityUpdateDownloader {
         @JsonProperty("tag_name") public String tag;
     }
 
-    public static class ResolvedApkUrl {
+    public static class ApkResolution {
+
+        @NonNull
+        public static ApkResolution withUrl(String url) {
+            ApkResolution r = new ApkResolution();
+            r.status = Status.APK_AVAILABLE;
+            r.url = url;
+            return r;
+        }
+
+        @NonNull
+        public static ApkResolution withVersion(String appVersion) {
+            ApkResolution r = new ApkResolution();
+            r.status = Status.ALREADY_LATEST;
+            r.appVersion = appVersion;
+            return r;
+        }
+
+        @NonNull
+        public static ApkResolution withError(String error) {
+            ApkResolution r = new ApkResolution();
+            r.status = Status.FAILED;
+            r.errorMessage = error;
+            return r;
+        }
+
+        @NonNull
+        public Status status = Status.FAILED;
+
+        @Nullable
         public String url;
+
+        @Nullable
         public String appVersion;
 
-        private ResolvedApkUrl(String url, String appVersion) {
-            super();
-            this.url = url;
-            this.appVersion = appVersion;
-        }
+        @Nullable
+        public String errorMessage;
+
+        private ApkResolution() { super(); }
+    }
+
+    public enum Status {
+        FAILED, APK_AVAILABLE, ALREADY_LATEST
     }
 
     @SuppressWarnings({"SameParameterValue", "OptionalGetWithoutIsPresent"})
-    public ResolvedApkUrl getLatestApkUrl(String url) {
+    @NonNull
+    public static ApkResolution resolveLatestApk() {
         try {
-            String content = getJSON(url, 5000);
-            if (content == null) return null;
-            ObjectMapper mapper = new ObjectMapper();
-            List<Release> releases = mapper.readValue(
-                content,
-                new TypeReference<List<Release>>() { }
+            String content = getJSON(RELEASES_URL, 5000);
+            if (content == null) return ApkResolution.withError("Network error");
+
+            List<Release> releases = new ObjectMapper().readValue(
+                content, new TypeReference<List<Release>>() { }
             );
 
             String apkType = "application/vnd.android.package-archive";
             Predicate<Asset> isApk = asset -> asset.contentType.equals((apkType));
-            List<ResolvedApkUrl> allAssetData = releases.stream()
+            List<Pair<String, String>> assetDataSorted = releases.stream()
                 .filter(release -> release.assets.stream().anyMatch(isApk))
                 .sorted(Comparator.comparing(o -> o.publishedAt))
                 .map(release -> {
                     String apkUrl = release.assets.stream().filter(isApk).findFirst().get().url;
                     String appVersion = release.tag.replaceFirst("v", "");
-                    return new ResolvedApkUrl(apkUrl, appVersion);
+                    return new Pair<>(apkUrl, appVersion);
                 })
                 .collect(Collectors.toList());
 
             // sorted, just take the last (latest)
-            return allAssetData.get(allAssetData.size() - 1);
+            Pair<String, String> lastReleaseData = assetDataSorted.get(assetDataSorted.size() - 1);
+
+            String apkUrl = lastReleaseData.first;
+            String appVersion = lastReleaseData.second;
+            if (BuildConfig.VERSION_NAME.equals(appVersion)) {
+                return ApkResolution.withVersion(appVersion);
+            } else {
+                return ApkResolution.withUrl(apkUrl);
+            }
         } catch (Throwable t) {
-            failAndClose(t);
-            return null;
+            Log.e(LowQualityUpdateDownloader.class.getSimpleName(), "Failed", t);
+            return ApkResolution.withError(t.getMessage());
         }
     }
 
     @SuppressWarnings("SameParameterValue")
-    private String getJSON(String url, int timeout) {
+    @Nullable
+    private static String getJSON(String url, int timeout) {
         HttpURLConnection c = null;
         try {
             URL u = new URL(url);
@@ -118,13 +159,14 @@ public class LowQualityUpdateDownloader {
                     br.close();
                     return sb.toString();
                 default:
-                    failAndClose(
-                        new IllegalStateException("HTTP/" + status + ": " + c.getResponseMessage())
-                    );
+                    Throwable t =
+                        new IllegalStateException("HTTP/" + status + ": " + c.getResponseMessage());
+                    Log.e(LowQualityUpdateDownloader.class.getSimpleName(), "Failed", t);
                     return null;
             }
         } catch (Throwable t) {
-            failAndClose(t);
+            Log.e(LowQualityUpdateDownloader.class.getSimpleName(), "Failed", t);
+            return null;
         } finally {
             if (c != null) {
                 try {
@@ -134,20 +176,6 @@ public class LowQualityUpdateDownloader {
                 }
             }
         }
-        return null;
-    }
-
-    private void failAndClose(Throwable t) {
-        new Handler(Looper.getMainLooper()).post(
-            () -> {
-                Toast.makeText(
-                    activity,
-                    "Failed, pfff...\n" + t.getMessage(),
-                    Toast.LENGTH_LONG
-                ).show();
-                activity.finish();
-            }
-        );
     }
 
 }
