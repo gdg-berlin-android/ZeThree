@@ -28,15 +28,15 @@ jobs:
             ~/.m2/repository
           key: ${{ runner.os }}-dependency-cache
 
-      - name: Pull the release keystore
-        env:
-          KEYSTORE_URL: ${{ secrets.KEYSTORE_URL }}
-        run: curl $KEYSTORE_URL -o keystore/zeapp-keystore
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build and test everything
         run: ./gradlew build
+
+      - name: Pull the release keystore
+        env:
+          KEYSTORE_URL: ${{ secrets.KEYSTORE_URL }}
+        run: curl $KEYSTORE_URL -o keystore/zeapp-keystore
 
       - name: Sign the app with the new key
         env:
@@ -46,12 +46,16 @@ jobs:
           KEY_PASS: ${{ secrets.KEY_PASS }}
         run: ./gradlew clean assembleRelease
 
+      - name: Store app version
+        id: versioning
+        run: echo ::set-output name=app_version::$(scripts/prop.sh version)
+
       - name: Upload binaries to a release
         uses: svenstaro/upload-release-action@v2
         with:
-          release_name: ${{ format('Release T-{0}', github.run_id) }}
+          release_name: ${{ format('Release v{0}', steps.versioning.outputs.app_version) }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: app/build/outputs/apk/release/app-release.apk
           asset_name: ze-app-3.apk
-          tag: ${{ github.run_id }}
+          tag: ${{ format('v{0}', steps.versioning.outputs.app_version) }}
           overwrite: true
