@@ -39,10 +39,22 @@ public class LowQualityUpdateDownloader {
     private static class Release {
         @JsonProperty("published_at") public Date publishedAt;
         @JsonProperty("assets") public List<Asset> assets;
+        @JsonProperty("tag_name") public String tag;
+    }
+
+    public static class ResolvedApkUrl {
+        public String url;
+        public String appVersion;
+
+        private ResolvedApkUrl(String url, String appVersion) {
+            super();
+            this.url = url;
+            this.appVersion = appVersion;
+        }
     }
 
     @SuppressWarnings({"SameParameterValue", "OptionalGetWithoutIsPresent"})
-    public String getLatestApkUrl(String url) {
+    public ResolvedApkUrl getLatestApkUrl(String url) {
         try {
             String content = getJSON(url, 5000);
             if (content == null) return null;
@@ -54,12 +66,18 @@ public class LowQualityUpdateDownloader {
 
             String apkType = "application/vnd.android.package-archive";
             Predicate<Asset> isApk = asset -> asset.contentType.equals((apkType));
-            List<String> apkUrls = releases.stream()
+            List<ResolvedApkUrl> allAssetData = releases.stream()
                 .filter(release -> release.assets.stream().anyMatch(isApk))
                 .sorted(Comparator.comparing(o -> o.publishedAt))
-                .map(release -> release.assets.stream().filter(isApk).findFirst().get().url)
+                .map(release -> {
+                    String apkUrl = release.assets.stream().filter(isApk).findFirst().get().url;
+                    String appVersion = release.tag.replaceFirst("v", "");
+                    return new ResolvedApkUrl(apkUrl, appVersion);
+                })
                 .collect(Collectors.toList());
-            return apkUrls.get(apkUrls.size() - 1);
+
+            // sorted, just take the last (latest)
+            return allAssetData.get(allAssetData.size() - 1);
         } catch (Throwable t) {
             failAndClose(t);
             return null;

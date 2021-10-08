@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import berlindroid.zethree.util.LowQualityUpdateDownloader;
+import berlindroid.zethree.util.LowQualityUpdateDownloader.ResolvedApkUrl;
 
 public class UpdateActivity extends Activity {
 
@@ -45,22 +46,35 @@ public class UpdateActivity extends Activity {
             @Override protected Void doInBackground(Void... voids) {
                 LowQualityUpdateDownloader downloader =
                     new LowQualityUpdateDownloader(UpdateActivity.this);
-                String latestApkUrl = downloader.getLatestApkUrl(
+                ResolvedApkUrl latestApkData = downloader.getLatestApkUrl(
                     "https://api.github.com/repos/gdg-berlin-android/ZeThree/releases"
                 );
-                if (latestApkUrl == null) return null;
 
                 new Handler(Looper.getMainLooper()).post(
                     () -> {
-                        Toast.makeText(
-                            UpdateActivity.this,
-                            "Install the downloaded file",
-                            Toast.LENGTH_LONG
-                        ).show();
+                        if (latestApkData == null) {
+                            Toast.makeText(
+                                UpdateActivity.this,
+                                "Can't fetch the update",
+                                Toast.LENGTH_LONG
+                            ).show();
+                        } else if (BuildConfig.VERSION_NAME.equals(latestApkData.appVersion)) {
+                            Toast.makeText(
+                                UpdateActivity.this,
+                                "Already at the latest version",
+                                Toast.LENGTH_LONG
+                            ).show();
+                        } else {
+                            Toast.makeText(
+                                UpdateActivity.this,
+                                "Install the downloaded file",
+                                Toast.LENGTH_LONG
+                            ).show();
 
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(latestApkUrl));
-                        startActivity(i);
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(latestApkData.url));
+                            startActivity(i);
+                        }
 
                         UpdateActivity.this.finish();
                     }
