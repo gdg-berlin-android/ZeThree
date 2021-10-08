@@ -7,12 +7,17 @@ plugins {
 android {
     compileSdk 31
 
+    def version = prop("version")
+    def code = Integer.parseInt(version.split("\\.")[0]) * 100 +
+        Integer.parseInt(version.split("\\.")[1]) * 10 +
+        Integer.parseInt(version.split("\\.")[2])
+
     defaultConfig {
         applicationId "berlindroid.zethree"
         minSdk 28
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode code
+        versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -83,4 +88,9 @@ dependencies {
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
+}
+
+// from gradle.properties
+def prop(String name) {
+    return properties[name]?.toString()
 }
