@@ -59,3 +59,12 @@ jobs:
           asset_name: ze-app-3.apk
           tag: ${{ format('v{0}', steps.versioning.outputs.app_version) }}
           overwrite: true
+
+      - name: Tweet about it 🐦
+        uses: ethomson/send-tweet-action@v1
+        with:
+          status: "${{ format('Release v{0}', steps.versioning.outputs.app_version) }} released at https://github.com/gdg-berlin-android/ZeThree/releases/tag/${{ format('Release v{0}', steps.versioning.outputs.app_version) }}. Enjoy."
+          consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+          consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
+          access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
