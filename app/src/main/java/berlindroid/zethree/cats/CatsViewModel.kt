@@ -1,6 +1,7 @@
 package berlindroid.zethree.cats
 
 import android.util.Log
+import androidx.annotation.Keep
 import androidx.lifecycle.ViewModel
 import berlindroid.zethree.cats.CatState.CatsFound
 import berlindroid.zethree.cats.CatState.Loading
@@ -17,6 +18,7 @@ sealed class CatState {
 
     object Loading : CatState()
 
+    @Keep
     data class CatsFound(val cats: List<CatUiModel>) : CatState()
 }
 
