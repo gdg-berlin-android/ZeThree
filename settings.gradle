@@ -8,6 +8,7 @@ pluginManagement {
         id 'com.android.application' version '7.0.2'
         id 'com.android.library' version '7.0.2'
         id 'org.jetbrains.kotlin.android' version '1.5.31'
+        id 'com.squareup.sqldelight' version '1.5.2'
     }
 }
 dependencyResolutionManagement {
