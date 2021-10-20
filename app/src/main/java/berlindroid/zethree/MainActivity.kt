@@ -5,6 +5,7 @@ import android.os.Bundle
 import berlindroid.zethree.R
 import android.view.View.OnLongClickListener
 import android.content.Intent
+import android.graphics.Color
 import android.view.View
 import berlindroid.zethree.cats.CatsActivity
 import berlindroid.zethree.dogs.DogsActivity
@@ -72,8 +73,14 @@ class MainActivity : Activity() {
             cat.x = r.nextFloat() * width
             cat.y = 0f
             cat.alpha = 0.0f
+            val startScale = r.nextFloat() * 0.5f
+            val targetScale = r.nextFloat() * 20.0f
+            cat.scaleX = startScale
+            cat.scaleY = startScale
             cat.rotation = r.nextFloat() * 360.0f
             cat.animate().translationY(height * 1.0f).setDuration(duration.toLong()).rotation(360f)
+                .scaleX(targetScale)
+                .scaleY(targetScale)
                 .setStartDelay(r.nextInt(duration / 2).toLong())
                 .withEndAction { root.removeView(cat) }
                 .withStartAction { cat.alpha = 1.0f }.setInterpolator(BounceInterpolator()).start()
