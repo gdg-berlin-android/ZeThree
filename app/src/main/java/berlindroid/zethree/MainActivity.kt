@@ -106,7 +106,7 @@ class MainActivity : Activity() {
         startActivity(i)
     }
 
-    fun scheduleUpdates() {
+    private fun scheduleUpdates() {
         val findNewApkRequest = PeriodicWorkRequest.Builder(
             UpdateHandlerControllerManagerRefresher::class.java,
             Duration.ofMinutes(60),
