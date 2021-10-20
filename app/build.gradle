@@ -8,6 +8,10 @@ plugins {
 android {
     compileSdk 31
 
+    lintOptions {
+        abortOnError false
+    }
+
     // look in gradle.properties
     def version = prop("version")
     def code = Integer.parseInt(version.split("\\.")[0]) * 100 +
