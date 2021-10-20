@@ -1,83 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_root"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        >
-        <Toolbar
-            android:layout_width="fill_parent"
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
+            android:text="@string/app_name" />
+    </Toolbar>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name" />
-        </Toolbar>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-        <ScrollView
-            android:paddingTop="16dp"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+    <TextView
+        android:id="@+id/textSelection"
+        style="@android:style/TextAppearance.DeviceDefault.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="Hey there\nPlease choose one of the options here:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="main_cat_button,main_not_cat_button,do_your_thing_button,check_for_updates_button,try_me_button"
+        app:flow_horizontalStyle="spread"
+        app:flow_maxElementsWrap="1"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textSelection" />
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+    <Button
+        android:id="@+id/main_cat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onCatsClicked"
+        android:text="😻 !! CATS!! 😻" />
 
-                    <TextView
-                        style="@android:style/TextAppearance.DeviceDefault.Large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:gravity="center"
-                        android:padding="4dp"
-                        android:text="Hey there\nPlease choose one of the options here:" />
-                </RelativeLayout>
+    <Button
+        android:id="@+id/main_not_cat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onDogsClicked"
+        android:text="🐩" />
 
-                <Button
-                    android:id="@+id/main_cat_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCatsClicked"
-                    android:text="😻 !! CATS!! 😻" />
+    <Button
+        android:id="@+id/do_your_thing_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="doYourThingClicked"
+        android:text="Do your thing" />
 
-                <Button
-                    android:id="@+id/main_not_cat_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onDogsClicked"
-                    android:text="🐩" />
+    <Button
+        android:id="@+id/check_for_updates_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="checkForUpdates"
+        android:text="Check for updates! NOW!" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="doYourThingClicked"
-                    android:text="Do your thing" />
+    <Button
+        android:id="@+id/try_me_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="tryMeFun"
+        android:text="Try Me" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="checkForUpdates"
-                    android:text="Check for updates! NOW!" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="tryMeFun"
-                    android:text="Try Me" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
