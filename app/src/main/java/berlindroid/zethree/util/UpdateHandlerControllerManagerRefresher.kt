@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
@@ -52,8 +53,12 @@ class UpdateHandlerControllerManagerRefresher(
         val intent = Intent(applicationContext, UpdateActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            FLAG_UPDATE_CURRENT or FLAG_MUTABLE
+        else
+            FLAG_UPDATE_CURRENT
         val pendingIntent = PendingIntent.getActivity(
-            applicationContext, 0, intent, FLAG_UPDATE_CURRENT
+            applicationContext, 0, intent, flags
         )!!
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setContentTitle("Berlindroid App")
