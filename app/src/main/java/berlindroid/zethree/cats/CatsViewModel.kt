@@ -49,7 +49,8 @@ class CatsViewModel : ViewModel() {
                 CatsFound(cats.map {
                     CatUiModel(
                         url = it.url,
-                        name = it.breeds.firstOrNull()?.name ?: it.id // Todo: be smarter about naming
+                        name = it.breeds.firstOrNull()?.name ?: it.id, // Todo: be smarter about naming
+                        energyLevel = it.breeds.firstOrNull()?.energyLevel ?: 0
                     )
                 })
             )
