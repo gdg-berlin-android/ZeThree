@@ -33,7 +33,6 @@ import berlindroid.zethree.R.string
 import berlindroid.zethree.cats.CatState.CatsFound
 import berlindroid.zethree.cats.CatState.Loading
 import berlindroid.zethree.cats.CatState.NoInternet
-import berlindroid.zethree.cats.CatsViewModel
 import berlindroid.zethree.cats.view.CatsUi
 import berlindroid.zethree.cats.ui.theme.ZeThreeTheme
 import coil.annotation.ExperimentalCoilApi
