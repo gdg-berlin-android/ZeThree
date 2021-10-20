@@ -37,11 +37,13 @@ jobs:
         run: ./gradlew build
 
       - name: Pull the release keystore
+        if: ${{ github.ref == 'refs/heads/main' }}
         env:
           KEYSTORE_URL: ${{ secrets.KEYSTORE_URL }}
         run: curl $KEYSTORE_URL -o keystore/zeapp-keystore
 
       - name: Sign the app with the new key
+        if: ${{ github.ref == 'refs/heads/main' }}
         env:
           KEYSTORE_FILE: ../keystore/zeapp-keystore
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
@@ -50,10 +52,12 @@ jobs:
         run: ./gradlew clean assembleRelease
 
       - name: Store app version
+        if: ${{ github.ref == 'refs/heads/main' }}
         id: versioning
         run: echo ::set-output name=app_version::$(scripts/prop.sh version)
 
       - name: Upload binaries to a release
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: svenstaro/upload-release-action@v2
         with:
           release_name: ${{ format('Release v{0}', steps.versioning.outputs.app_version) }}
@@ -64,6 +68,7 @@ jobs:
           overwrite: true
 
       - name: Tweet about it 🐦
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: ethomson/send-tweet-action@v1
         with:
           status: "${{ format('Release v{0}', steps.versioning.outputs.app_version) }} released at https://github.com/gdg-berlin-android/ZeThree/releases/tag/${{ format('Release v{0}', steps.versioning.outputs.app_version) }}. Enjoy."
