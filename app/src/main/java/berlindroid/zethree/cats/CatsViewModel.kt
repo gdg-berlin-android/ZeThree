@@ -13,6 +13,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
+import okhttp3.logging.HttpLoggingInterceptor.Level.*
 import retrofit2.Retrofit
 
 sealed class CatState {
@@ -32,6 +36,10 @@ class CatsViewModel : ViewModel() {
         Retrofit
             .Builder()
             .baseUrl("https://api.thecatapi.com/v1/")
+            .client(OkHttpClient().newBuilder()
+                .addInterceptor(HttpLoggingInterceptor().apply { level = BODY })
+                .build()
+            )
             .addConverterFactory(
                 json.asConverterFactory(
                     MediaType.get("application/json")
