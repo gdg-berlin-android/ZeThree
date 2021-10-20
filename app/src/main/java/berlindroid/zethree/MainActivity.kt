@@ -78,7 +78,9 @@ class MainActivity : Activity() {
             cat.scaleX = startScale
             cat.scaleY = startScale
             cat.rotation = r.nextFloat() * 360.0f
+            cat.rotationY = r.nextFloat() * 180.0f
             cat.animate().translationY(height * 1.0f).setDuration(duration.toLong()).rotation(360f)
+                .rotationY(360.0f)
                 .scaleX(targetScale)
                 .scaleY(targetScale)
                 .setStartDelay(r.nextInt(duration / 2).toLong())
