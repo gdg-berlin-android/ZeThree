@@ -55,6 +55,13 @@
                     android:text="😻 !! CATS!! 😻" />
 
                 <Button
+                    android:id="@+id/main_not_cat_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onDogsClicked"
+                    android:text="🐩" />
+
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="doYourThingClicked"

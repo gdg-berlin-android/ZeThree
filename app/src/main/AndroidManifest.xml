@@ -5,15 +5,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".CatsApplication"
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
-        android:name="CatsApplication"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ZeThree"
-        android:fullBackupContent="false">
-
+        android:theme="@style/Theme.ZeThree">
+        <activity
+            android:name=".dogs.DogsActivity"
+            android:theme="@style/Theme.ZeThree"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,17 +27,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".cats.CatsActivity"
             android:exported="false"
             android:theme="@style/Theme.ZeThree" />
-
         <activity
             android:name=".UpdateActivity"
             android:exported="false"
             android:theme="@style/Theme.ZeThree" />
-
     </application>
 
 </manifest>

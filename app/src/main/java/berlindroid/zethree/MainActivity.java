@@ -20,6 +20,7 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import berlindroid.zethree.cats.CatsActivity;
+import berlindroid.zethree.dogs.DogsActivity;
 import berlindroid.zethree.util.UpdateHandlerControllerManagerRefresher;
 
 public class MainActivity extends Activity {
@@ -46,6 +47,10 @@ public class MainActivity extends Activity {
 
     public void onCatsClicked(View view) {
         startActivity(new Intent(this, CatsActivity.class));
+    }
+
+    public void onDogsClicked(View view) {
+        startActivity(new Intent(this,DogsActivity.class));
     }
 
     public void onCatsLongClicked(View view) {
