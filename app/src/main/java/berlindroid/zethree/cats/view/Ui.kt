@@ -85,7 +85,7 @@ fun CatUi(
             )
             Text(
                 text = "energyLevel: $energyLevel",
-                fontSize = 10.sp,
+                fontSize = 20.sp,
                 color = MaterialTheme.colors.secondaryVariant,
                 modifier = Modifier
                     .padding(4.dp)

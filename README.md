@@ -10,7 +10,7 @@ ZeWhat?
 
 Based on the previous success of the `ZeAppp`-app, this app will be the same but different: 
 We'll start with a base app and have several tasks sprinkled out in the code base. 
-If you are at the booth, please look behind on the wall for the current tasks list, or feel free to add your own. 
+If you are at the booth, please look around for the current tasks list, or feel free to add your own. 
 We don't have a project manager yet, so feel free to use your 15 min time slot wisely.
 
 What?

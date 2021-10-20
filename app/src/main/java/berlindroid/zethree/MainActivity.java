@@ -84,7 +84,7 @@ public class MainActivity extends Activity {
     public void doYourThingClicked(View view) {
         Toast.makeText(
             this,
-            "Hey, do what ever you want, you got 15 minutes!\n\nNo idea what to do? Look behind " +
+            "Hey, do what ever you want, you got 15 minutes!\n\nNo idea what to do? Look around you for some task  " +
                 "you!",
             Toast.LENGTH_LONG
         ).show();
