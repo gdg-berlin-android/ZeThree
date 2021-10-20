@@ -1,7 +1,14 @@
 package berlindroid.zethree.cats.repository
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
 import retrofit2.http.GET
 
 @Serializable
@@ -51,3 +58,22 @@ interface CatApi {
     @GET("images/search?limit=15&page=10&order=Desc")
     suspend fun getCats(): List<CatModel>
 }
+
+private val json = Json { ignoreUnknownKeys = true }
+
+// TODO: Use DI
+@ExperimentalSerializationApi
+fun provideCatApi(): CatApi = Retrofit
+    .Builder()
+    .baseUrl("https://api.thecatapi.com/v1/")
+    .client(
+        OkHttpClient().newBuilder()
+        .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+        .build()
+    )
+    .addConverterFactory(
+        json.asConverterFactory(
+            MediaType.get("application/json")
+        )
+    ).build()
+    .create(CatApi::class.java)

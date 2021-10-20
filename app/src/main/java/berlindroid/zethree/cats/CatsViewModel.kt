@@ -6,18 +6,11 @@ import berlindroid.zethree.cats.CatState.CatsFound
 import berlindroid.zethree.cats.CatState.Loading
 import berlindroid.zethree.cats.CatState.NoInternet
 import berlindroid.zethree.cats.repository.CatApi
+import berlindroid.zethree.cats.repository.provideCatApi
 import berlindroid.zethree.cats.view.CatUiModel
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level
-import okhttp3.logging.HttpLoggingInterceptor.Level.*
-import retrofit2.Retrofit
 
 sealed class CatState {
     object NoInternet : CatState()
@@ -28,31 +21,13 @@ sealed class CatState {
 }
 
 @ExperimentalSerializationApi
-class CatsViewModel : ViewModel() {
-    private val json = Json { ignoreUnknownKeys = true }
-
-    // TODO: Use DI
-    private val repository: CatApi by lazy {
-        Retrofit
-            .Builder()
-            .baseUrl("https://api.thecatapi.com/v1/")
-            .client(OkHttpClient().newBuilder()
-                .addInterceptor(HttpLoggingInterceptor().apply { level = BODY })
-                .build()
-            )
-            .addConverterFactory(
-                json.asConverterFactory(
-                    MediaType.get("application/json")
-                )
-            ).build()
-            .create(CatApi::class.java)
-    }
+class CatsViewModel(private val catApi: CatApi = provideCatApi()) : ViewModel() {
 
     val catsFlow: Flow<CatState> = flow {
         emit(Loading)
 
         try {
-            val cats = repository.getCats()
+            val cats = catApi.getCats()
             emit(
                 CatsFound(cats.map {
                     CatUiModel(
