@@ -81,6 +81,14 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void tryMeFun(View view){
+        Toast.makeText(
+                this,
+                "Hey, it's fun and built upon me",
+                Toast.LENGTH_LONG
+        ).show();
+    }
+
     public void doYourThingClicked(View view) {
         Toast.makeText(
             this,
