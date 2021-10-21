@@ -72,7 +72,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: ethomson/send-tweet-action@v1
         with:
-          status: "${{format('v{0} released at https://github.com/gdg-berlin-android/ZeThree/releases/tag/v{0} #dcbln21', steps.versioning.outputs.app_version)}}"
+          status: "${{format('Build {1} created app version {0} on https://github.com/gdg-berlin-android/ZeThree/releases/tag/v{0} #dcbln21', steps.versioning.outputs.app_version, GITHUB_RUN_NUMBER )}}"
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
