@@ -2,19 +2,25 @@ package berlindroid.zethree
 
 import android.app.Activity
 import android.os.Bundle
-import berlindroid.zethree.R
 import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Looper
-import berlindroid.zethree.util.LowQualityUpdateDownloader.ApkResolution
 import berlindroid.zethree.util.LowQualityUpdateDownloader
 import android.widget.Toast
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.view.View
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlin.coroutines.coroutineContext
 
 class UpdateActivity : Activity() {
+
+    //Use this scope to run the coroutine and remove the AsyncTasks :*
+    private val coroutineScope = Dispatchers.IO + Job()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.update_activity)
@@ -25,7 +31,8 @@ class UpdateActivity : Activity() {
     override fun onStart() {
         super.onStart()
 
-        // AsyncTask is the new Coroutine Job!
+
+                // AsyncTask is the new Coroutine Job!
         object : AsyncTask<Void?, Void?, Void?>() {
             override fun doInBackground(vararg params: Void?): Void? {
                 // cause some fake delay to prevent GitHub's rate-limiter from kicking in
