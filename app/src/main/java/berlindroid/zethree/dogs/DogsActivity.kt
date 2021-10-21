@@ -3,7 +3,11 @@ package berlindroid.zethree.dogs
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import berlindroid.zethree.berlindroid.zethree.dogs.DogsApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -40,7 +44,16 @@ class DogsActivity : ComponentActivity() {
         lifecycleScope.launch {
             val dog = api.allDogs()
             setContent {
-                Text(text = dog.message.keys.joinToString())
+                Column {
+                    Text(
+                        modifier = Modifier.padding(16.dp),
+                        text = "Dog are the best"
+                    )
+                    Text(
+                        modifier = Modifier.padding(16.dp),
+                        text = dog.message.keys.joinToString()
+                    )
+                }
             }
         }
     }
