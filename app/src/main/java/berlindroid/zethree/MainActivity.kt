@@ -10,6 +10,7 @@ import berlindroid.zethree.dogs.DogsActivity
 import android.view.ViewGroup
 import android.widget.TextView
 import android.view.animation.BounceInterpolator
+import android.widget.Button
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.core.view.children
@@ -180,14 +181,16 @@ class MainActivity : Activity() {
     }
 }
 
-
-fun ViewGroup.woobleEVERYTHING() = children.forEach { it.startWobbling() }
+fun ViewGroup.woobleEVERYTHING() = children.forEach {
+    if ( it is Button) {
+        it.startWobbling()
+    }
+}
 
 fun View.startWobbling() {
     val minDuration = 1f
     val maxDuration = 1.5f
     val duration: Float = randomRange(minDuration, maxDuration)
-
 
     play(
         forever(
