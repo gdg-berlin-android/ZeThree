@@ -71,7 +71,6 @@ android {
 }
 
 dependencies {
-
     implementation "com.github.kibotu:AndroidAnimationsActions:2.0.1"
 
     implementation 'androidx.core:core:1.7.0-rc01'
@@ -109,6 +108,8 @@ dependencies {
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
+    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.5.2"
 }
 
 // from gradle.properties

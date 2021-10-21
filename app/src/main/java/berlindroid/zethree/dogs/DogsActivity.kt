@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import berlindroid.zethree.berlindroid.zethree.cats.di.SingletonDontDeleteMe
 import berlindroid.zethree.berlindroid.zethree.dogs.DogsApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ class DogsActivity : ComponentActivity() {
             .baseUrl("https://google.com")
             .client(
                 OkHttpClient().newBuilder()
+                    .addInterceptor(SingletonDontDeleteMe.interceptor)
                     .addInterceptor(HttpLoggingInterceptor().apply {
                         level =
                             HttpLoggingInterceptor.Level.BODY

@@ -199,8 +199,9 @@ fun View.startWobbling() {
     play(
         forever(
             sequence(
-                scaleTo(0.5f, 1f, duration, Interpolations.SineEaseInOut),
-                scaleTo(1f, 0.5f, duration, Interpolations.SineEaseInOut),
+                scaleTo(1.0f, 3.0f, duration, Interpolations.SineEaseInOut),
+                scaleTo(1.0f, 0.75f, duration, Interpolations.SineEaseInOut),
+                scaleTo(1.0f, 3.0f, duration, Interpolations.SineEaseInOut),
             )
         ),
         this

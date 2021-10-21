@@ -1,5 +1,6 @@
 package berlindroid.zethree.cats.repository
 
+import berlindroid.zethree.berlindroid.zethree.cats.di.SingletonDontDeleteMe
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
@@ -68,6 +69,7 @@ fun provideCatApi(): CatApi = Retrofit
     .baseUrl("https://api.thecatapi.com/v1/")
     .client(
         OkHttpClient().newBuilder()
+        .addInterceptor(SingletonDontDeleteMe.interceptor!!)
         .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
         .build()
     )
