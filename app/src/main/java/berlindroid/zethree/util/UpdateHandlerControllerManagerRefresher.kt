@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
+import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import berlindroid.zethree.R
@@ -66,6 +67,8 @@ class UpdateHandlerControllerManagerRefresher(
             .setContentIntent(pendingIntent)
 
 
+        var shouldNotify = true
+
         val workResult = when (resolvedApk.status) {
             FAILED -> {
                 builder
@@ -91,12 +94,15 @@ class UpdateHandlerControllerManagerRefresher(
                     .setContentInfo("GitHub Release ${resolvedApk.appVersion}")
                     .setPriority(NotificationCompat.PRIORITY_LOW)
 
+                shouldNotify = false
                 Result.success()
             }
         }
 
         val notification = builder.build()
-        NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_ID, notification)
+        if(shouldNotify) {
+            NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_ID, notification)
+        }
 
         return workResult
     }
