@@ -91,7 +91,7 @@
         android:id="@+id/flutter_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="tryMeFun"
+        android:onClick="onFlutterClicked"
         android:text="Flutter" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

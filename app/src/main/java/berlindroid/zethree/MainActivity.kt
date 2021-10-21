@@ -138,6 +138,10 @@ class MainActivity : Activity() {
         }
     }
 
+    fun onFlutterClicked(view: View?) {
+        findViewById<Button>(R.id.flutter_button).text = "Android is better than Floeter"
+    }
+
     fun tryMeFun(view: View?) {
         Toast.makeText(
             this,
