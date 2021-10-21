@@ -3,6 +3,7 @@ package berlindroid.zethree
 import android.app.Activity
 import android.os.Bundle
 import android.content.Intent
+import android.graphics.Color
 import android.view.View
 import berlindroid.zethree.cats.CatsActivity
 import berlindroid.zethree.dogs.DogsActivity
@@ -68,11 +69,12 @@ class MainActivity : Activity() {
             dog.text = dogs[r.nextInt(dogs.size)]
             dog.x = r.nextFloat() * width
             dog.y = 3000f
-            dog.alpha = 1.0f
+            dog.z = 5.5f + (r.nextFloat()-0.5f) * 3.0f
             dog.scaleX = 30.0f
             dog.scaleY = 30.0f
 
-            dog.animate().translationY(-40.0f)
+            dog.animate()
+                .translationY(-40.0f)
                 .setDuration(duration.toLong())
                 .scaleX(targetScale)
                 .scaleY(targetScale)
@@ -80,13 +82,13 @@ class MainActivity : Activity() {
                 .withEndAction { root.removeView(dog) }
                 .start()
 
-            root.addView(dog, 80, 80)
+            root.addView(dog)
         }
     }
 
     fun onCatsLongClicked(view: View?) {
         val cats: MutableList<String> = ArrayList()
-        cats.add("😻")
+        cats.add("😻") // 🐬🐬🐬🐬
         cats.add("😺")
         cats.add("😸")
         cats.add("😹")

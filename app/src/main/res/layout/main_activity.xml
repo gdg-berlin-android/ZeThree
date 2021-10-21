@@ -53,39 +53,38 @@
 
     <Button
         android:id="@+id/main_cat_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onCatsClicked"
         android:text="😻 !! CATS!! 😻" />
 
     <Button
         android:id="@+id/main_not_cat_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onDogsClicked"
         android:text="🐩 and Dogs 🐩" />
 
     <Button
         android:id="@+id/do_your_thing_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="doYourThingClicked"
         android:text="Do your thing" />
 
     <Button
         android:id="@+id/check_for_updates_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="checkForUpdates"
         android:text="Check for updates! NOW!" />
 
     <Button
         android:id="@+id/try_me_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="tryMeFun"
         android:text="Try Me" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
