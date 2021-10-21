@@ -2,10 +2,7 @@ package berlindroid.zethree
 
 import android.app.Activity
 import android.os.Bundle
-import berlindroid.zethree.R
-import android.view.View.OnLongClickListener
 import android.content.Intent
-import android.graphics.Color
 import android.view.View
 import berlindroid.zethree.cats.CatsActivity
 import berlindroid.zethree.dogs.DogsActivity
@@ -14,7 +11,6 @@ import android.widget.TextView
 import android.view.animation.BounceInterpolator
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
-import berlindroid.zethree.UpdateActivity
 import androidx.work.PeriodicWorkRequest
 import berlindroid.zethree.util.UpdateHandlerControllerManagerRefresher
 import androidx.work.BackoffPolicy
@@ -37,6 +33,13 @@ class MainActivity : Activity() {
             )
             true
         }
+
+        findViewById<View>(R.id.main_not_cat_button).setOnLongClickListener { view: View? ->
+            onDogsLongClicked(
+                findViewById(R.id.main_cat_button)
+            )
+            true
+        }
         super.onResume()
     }
 
@@ -47,6 +50,41 @@ class MainActivity : Activity() {
 
     fun onDogsClicked(view: View?) {
         startActivity(Intent(this, DogsActivity::class.java))
+    }
+
+    fun onDogsLongClicked(view: View?) {
+        val dogs: MutableList<String> = ArrayList()
+        dogs.add("🐶")
+        dogs.add("🐕")
+        dogs.add("🐩")
+
+        val r = Random()
+        val width = 1000
+        val duration = 5000
+        val root = findViewById<ViewGroup>(R.id.main_root)
+        for (i in 0..23) {
+            val dog = TextView(this)
+            val targetScale = r.nextFloat() * 0.1f
+            dog.animate().translationY(-40.0f)
+                .setDuration(duration.toLong())
+                .scaleX(targetScale)
+                .scaleY(targetScale)
+                .setStartDelay(r.nextInt(duration / 2).toLong())
+                .withEndAction { root.removeView(dog) }
+                .withStartAction {
+                    dog.text = dogs[r.nextInt(dogs.size)]
+                    dog.x = r.nextFloat() * width
+                    dog.y = 2000f
+                    dog.scaleX = 30.0f
+                    dog.scaleY = 30.0f
+
+                    dog.rotation = r.nextFloat() * 360.0f
+                    dog.rotationY = r.nextFloat() * 180.0f
+                }
+                .start()
+
+            root.addView(dog, 80, 80)
+        }
     }
 
     fun onCatsLongClicked(view: View?) {
