@@ -33,8 +33,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
       - name: Build and test everything
-        run: ./gradlew build
+        run: ./gradlew build testDebug
 
       - name: Pull the release keystore
         if: ${{ github.ref == 'refs/heads/main' }}
