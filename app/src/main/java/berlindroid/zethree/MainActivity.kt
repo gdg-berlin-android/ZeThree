@@ -12,11 +12,17 @@ import android.widget.TextView
 import android.view.animation.BounceInterpolator
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.core.view.children
 import androidx.work.PeriodicWorkRequest
 import berlindroid.zethree.util.UpdateHandlerControllerManagerRefresher
 import androidx.work.BackoffPolicy
 import androidx.work.WorkManager
 import androidx.work.ExistingPeriodicWorkPolicy
+import com.dtx12.android_animations_actions.actions.Actions.forever
+import com.dtx12.android_animations_actions.actions.Actions.play
+import com.dtx12.android_animations_actions.actions.Actions.sequence
+import com.dtx12.android_animations_actions.actions.Actions.scaleTo
+import com.dtx12.android_animations_actions.actions.Interpolations
 import java.time.Duration
 import java.util.*
 
@@ -25,6 +31,8 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         scheduleUpdates()
+
+        findViewById<ViewGroup>(R.id.main_root).woobleEVERYTHING()
     }
 
     public override fun onResume() {
@@ -43,6 +51,8 @@ class MainActivity : Activity() {
         }
         super.onResume()
     }
+
+
 
     @OptIn(ExperimentalFoundationApi::class)
     fun onCatsClicked(view: View?) {
@@ -169,3 +179,26 @@ class MainActivity : Activity() {
             )
     }
 }
+
+
+fun ViewGroup.woobleEVERYTHING() = children.forEach { it.startWobbling() }
+
+fun View.startWobbling() {
+    val minDuration = 1f
+    val maxDuration = 1.5f
+    val duration: Float = randomRange(minDuration, maxDuration)
+
+
+    play(
+        forever(
+            sequence(
+                scaleTo(0.5f, 1f, duration, Interpolations.SineEaseInOut),
+                scaleTo(1f, 0.5f, duration, Interpolations.SineEaseInOut),
+            )
+        ),
+        this
+    )
+}
+
+private fun randomRange(start: Float, end: Float): Float = Random().nextFloat() * (end - start) + start
+

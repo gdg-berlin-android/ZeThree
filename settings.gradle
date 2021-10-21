@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
     plugins {
         id 'com.android.application' version '7.0.2'
@@ -16,6 +17,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "ZeThree"
