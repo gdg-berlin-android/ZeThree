@@ -43,7 +43,7 @@
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:constraint_referenced_ids="main_cat_button,main_not_cat_button,do_your_thing_button,check_for_updates_button,try_me_button"
+        app:constraint_referenced_ids="main_cat_button,main_not_cat_button,do_your_thing_button,check_for_updates_button,try_me_button, flutter_button"
         app:flow_horizontalStyle="spread"
         app:flow_maxElementsWrap="1"
         app:flow_wrapMode="chain"
@@ -86,5 +86,12 @@
         android:onClick="tryMeFun"
         android:text="Try Me" />
 
+
+    <Button
+        android:id="@+id/flutter_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="tryMeFun"
+        android:text="Flutter" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
