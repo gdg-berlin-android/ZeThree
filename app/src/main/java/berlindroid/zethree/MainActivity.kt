@@ -63,24 +63,21 @@ class MainActivity : Activity() {
         val duration = 5000
         val root = findViewById<ViewGroup>(R.id.main_root)
         for (i in 0..23) {
-            val dog = TextView(this)
             val targetScale = r.nextFloat() * 0.1f
+            val dog = TextView(this)
+            dog.text = dogs[r.nextInt(dogs.size)]
+            dog.x = r.nextFloat() * width
+            dog.y = 3000f
+            dog.alpha = 1.0f
+            dog.scaleX = 30.0f
+            dog.scaleY = 30.0f
+
             dog.animate().translationY(-40.0f)
                 .setDuration(duration.toLong())
                 .scaleX(targetScale)
                 .scaleY(targetScale)
                 .setStartDelay(r.nextInt(duration / 2).toLong())
                 .withEndAction { root.removeView(dog) }
-                .withStartAction {
-                    dog.text = dogs[r.nextInt(dogs.size)]
-                    dog.x = r.nextFloat() * width
-                    dog.y = 2000f
-                    dog.scaleX = 30.0f
-                    dog.scaleY = 30.0f
-
-                    dog.rotation = r.nextFloat() * 360.0f
-                    dog.rotationY = r.nextFloat() * 180.0f
-                }
                 .start()
 
             root.addView(dog, 80, 80)
