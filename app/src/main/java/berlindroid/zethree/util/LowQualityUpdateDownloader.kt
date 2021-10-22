@@ -20,10 +20,11 @@ import java.util.stream.Collectors
 object LowQualityUpdateDownloader {
     private const val RELEASES_URL =
         "https://api.github.com/repos/gdg-berlin-android/ZeThree/releases"
+    private const val TIMEOUT = 5000
 
     fun resolveLatestApk(): ApkResolutionFactory {
         return try {
-            val content = getJSON(RELEASES_URL, 5000)
+            val content = getJSON(RELEASES_URL, TIMEOUT)
                 ?: return ApkResolutionFactory.withError("Network error")
             val releases: List<Release> = ObjectMapper().readValue(
                 content, object : TypeReference<List<Release>>() {}
