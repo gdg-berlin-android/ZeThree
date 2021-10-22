@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeThree">
         <activity
-            android:theme="@style/Theme.ZeThree"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name=".MessagesActivity"
             android:exported="false" />
 
