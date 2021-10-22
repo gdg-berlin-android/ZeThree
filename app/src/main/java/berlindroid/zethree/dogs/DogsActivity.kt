@@ -62,8 +62,8 @@ class DogsActivity : ComponentActivity() {
                         text = dog.message.keys.joinToString()
                     )
                     OutlinedButton(onClick = {
-                        if(mediaPlayer.isPlaying){
-                            mediaPlayer.stop()
+                        if(mediaPlayer!!.isPlaying){
+                            mediaPlayer!!.stop()
                         }
                     }) {
                         Text("I'm an Outlined Button")
@@ -77,6 +77,6 @@ class DogsActivity : ComponentActivity() {
         if(mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.dogbark)
         }
-        mediaPlayer.start()
+        mediaPlayer!!.start()
     }
 }
