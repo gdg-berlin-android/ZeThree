@@ -101,7 +101,7 @@
         android:id="@+id/chat_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chat, not Chet" />
+        android:text="Ch*t ??" />
 
 
     <Button
