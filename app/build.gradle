@@ -72,6 +72,9 @@ android {
 }
 
 dependencies {
+
+    implementation project(":shared")
+
     implementation "com.github.kibotu:AndroidAnimationsActions:2.0.1"
 
     implementation 'androidx.core:core:1.7.0-rc01'

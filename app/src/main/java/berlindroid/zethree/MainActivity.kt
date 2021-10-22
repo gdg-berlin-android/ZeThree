@@ -23,7 +23,7 @@ import com.dtx12.android_animations_actions.actions.Actions.play
 import com.dtx12.android_animations_actions.actions.Actions.scaleTo
 import com.dtx12.android_animations_actions.actions.Actions.sequence
 import com.dtx12.android_animations_actions.actions.Interpolations
-import com.google.android.material.snackbar.Snackbar
+import com.example.shared.KMPGreeter
 import java.time.Duration
 import java.util.*
 
@@ -37,6 +37,15 @@ class MainActivity : Activity() {
     }
 
     public override fun onResume() {
+        findViewById<View>(R.id.kmp_button).setOnClickListener { view: View? ->
+           val x = KMPGreeter.greetings()
+            Toast.makeText(
+                this,
+                x,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
         findViewById<View>(R.id.main_cat_button).setOnLongClickListener { view: View? ->
             onCatsLongClicked(
                 findViewById(R.id.main_cat_button)

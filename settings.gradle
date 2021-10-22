@@ -10,6 +10,7 @@ pluginManagement {
         id 'com.android.library' version '7.0.2'
         id 'org.jetbrains.kotlin.android' version '1.5.31'
         id 'com.squareup.sqldelight' version '1.5.2'
+        id 'org.jetbrains.kotlin.jvm' version '1.5.31'
     }
 }
 dependencyResolutionManagement {
@@ -22,3 +23,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ZeThree"
 include ':app'
+include ':shared'

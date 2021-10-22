@@ -110,5 +110,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+        android:id="@+id/kmp_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/troll"
+        android:text="Hello from KMP" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
