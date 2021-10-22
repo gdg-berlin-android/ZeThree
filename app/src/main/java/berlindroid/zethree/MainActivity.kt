@@ -34,6 +34,10 @@ class MainActivity : Activity() {
         scheduleUpdates()
 
         findViewById<ViewGroup>(R.id.main_root).woobleEVERYTHING()
+
+        findViewById<View>(R.id.chat_button).setOnClickListener {
+            startActivity(Intent(this, MessagesActivity::class.java))
+        }
     }
 
     public override fun onResume() {

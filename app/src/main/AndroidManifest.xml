@@ -13,6 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeThree">
+        <activity
+            android:theme="@style/Theme.AppCompat"
+            android:name=".MessagesActivity"
+            android:exported="false" />
+
         <receiver
             android:name=".widget.ChetWidget"
             android:exported="true">
@@ -26,9 +31,10 @@
         </receiver>
 
         <activity
+            android:theme="@style/Theme.ZeThree"
             android:name=".dogs.DogsActivity"
             android:exported="false"
-            android:theme="@style/Theme.ZeThree" />
+             />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -15,6 +15,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,7 +30,7 @@ class DogsActivity : ComponentActivity() {
             .baseUrl("https://google.com")
             .client(
                 OkHttpClient().newBuilder()
-                    .addInterceptor(SingletonDontDeleteMe.interceptor)
+                    //.addInterceptor(SingletonDontDeleteMe.interceptor)
                     .addInterceptor(HttpLoggingInterceptor().apply {
                         level =
                             HttpLoggingInterceptor.Level.BODY
@@ -38,7 +39,7 @@ class DogsActivity : ComponentActivity() {
             )
             .addConverterFactory(
                 json.asConverterFactory(
-                    MediaType.get("application/json")
+                    "application/json".toMediaType()
                 )
             ).build()
         val api = retrofit.create<DogsApi>()

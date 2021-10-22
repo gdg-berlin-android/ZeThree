@@ -7,6 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -75,7 +76,7 @@ fun provideCatApi(): CatApi = Retrofit
     )
     .addConverterFactory(
         json.asConverterFactory(
-            MediaType.get("application/json")
+            "application/json".toMediaType()
         )
     ).build()
     .create(CatApi::class.java)
