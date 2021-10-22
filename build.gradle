@@ -5,14 +5,7 @@ task clean(type: Delete) {
 }
 
 buildscript {
-    ext.kotlin_version = '1.6.0-RC'
     ext {
         compose_version = '1.0.4'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
