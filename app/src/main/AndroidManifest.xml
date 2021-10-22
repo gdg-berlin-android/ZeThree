@@ -13,10 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeThree">
+        <receiver
+            android:name=".widget.ChetWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/custom_widget_info" />
+        </receiver>
+
         <activity
             android:name=".dogs.DogsActivity"
-            android:theme="@style/Theme.ZeThree"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.ZeThree" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -1,29 +1,29 @@
 package berlindroid.zethree
 
 import android.app.Activity
-import android.os.Bundle
 import android.content.Intent
-import android.graphics.Color
+import android.os.Bundle
 import android.view.View
-import berlindroid.zethree.cats.CatsActivity
-import berlindroid.zethree.dogs.DogsActivity
 import android.view.ViewGroup
-import android.widget.TextView
 import android.view.animation.BounceInterpolator
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.core.view.children
-import androidx.work.PeriodicWorkRequest
-import berlindroid.zethree.util.UpdateHandlerControllerManagerRefresher
 import androidx.work.BackoffPolicy
-import androidx.work.WorkManager
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
+import berlindroid.zethree.cats.CatsActivity
+import berlindroid.zethree.dogs.DogsActivity
+import berlindroid.zethree.util.UpdateHandlerControllerManagerRefresher
 import com.dtx12.android_animations_actions.actions.Actions.forever
 import com.dtx12.android_animations_actions.actions.Actions.play
-import com.dtx12.android_animations_actions.actions.Actions.sequence
 import com.dtx12.android_animations_actions.actions.Actions.scaleTo
+import com.dtx12.android_animations_actions.actions.Actions.sequence
 import com.dtx12.android_animations_actions.actions.Interpolations
+import com.google.android.material.snackbar.Snackbar
 import java.time.Duration
 import java.util.*
 
@@ -53,7 +53,14 @@ class MainActivity : Activity() {
         super.onResume()
     }
 
-
+    fun onChetClicked(view: View?) {
+        Toast
+            .makeText(
+                this,
+                "Go to your launcher, long press on the background, and add the widget.",
+                Toast.LENGTH_LONG
+            ).show()
+    }
 
     @OptIn(ExperimentalFoundationApi::class)
     fun onCatsClicked(view: View?) {
@@ -79,8 +86,8 @@ class MainActivity : Activity() {
             val dog = TextView(this)
             dog.text = dogs[r.nextInt(dogs.size)]
             dog.x = r.nextFloat() * width
-            dog.y = 3000f
-            dog.z = 5.5f + (r.nextFloat()-0.5f) * 3.0f
+            dog.y = 2000f
+            dog.z = 5.5f + (r.nextFloat() - 0.5f) * 3.0f
             dog.scaleX = 30.0f
             dog.scaleY = 30.0f
 
@@ -186,7 +193,7 @@ class MainActivity : Activity() {
 }
 
 fun ViewGroup.woobleEVERYTHING() = children.forEach {
-    if ( it is Button) {
+    if (it is Button) {
         it.startWobbling()
     }
 }
@@ -207,5 +214,6 @@ fun View.startWobbling() {
     )
 }
 
-private fun randomRange(start: Float, end: Float): Float = Random().nextFloat() * (end - start) + start
+private fun randomRange(start: Float, end: Float): Float =
+    Random().nextFloat() * (end - start) + start
 
