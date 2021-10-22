@@ -15,6 +15,7 @@ import androidx.work.BackoffPolicy
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import berlindroid.zethree.berlindroid.zethree.listy.ListyActivity
 import berlindroid.zethree.cats.CatsActivity
 import berlindroid.zethree.dogs.DogsActivity
 import berlindroid.zethree.util.UpdateHandlerControllerManagerRefresher
@@ -64,6 +65,10 @@ class MainActivity : Activity() {
                 "Go to your launcher, long press on the background, and add the widget.",
                 Toast.LENGTH_LONG
             ).show()
+    }
+
+    fun onListyClicked(view: View?) {
+        startActivity(Intent(this, ListyActivity::class.java))
     }
 
     @OptIn(ExperimentalFoundationApi::class)

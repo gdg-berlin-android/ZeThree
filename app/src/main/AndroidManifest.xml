@@ -35,6 +35,13 @@
             android:name=".dogs.DogsActivity"
             android:exported="false"
              />
+
+        <activity
+            android:theme="@style/Theme.ZeThree"
+            android:name=".berlindroid.zethree.listy.ListyActivity"
+            android:exported="false"
+            />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
