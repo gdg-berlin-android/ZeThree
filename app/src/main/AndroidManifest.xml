@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ZeThree">
         <activity
-            android:theme="@style/Theme.AppCompat"
+            android:theme="@style/Theme.ZeThree"
             android:name=".MessagesActivity"
             android:exported="false" />
 
@@ -53,6 +53,10 @@
             android:name=".UpdateActivity"
             android:exported="false"
             android:theme="@style/Theme.ZeThree" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

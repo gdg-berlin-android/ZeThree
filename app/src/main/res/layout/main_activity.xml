@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/droid">
 
     <Toolbar
         android:id="@+id/toolbar"
@@ -36,6 +37,7 @@
         android:gravity="center"
         android:padding="4dp"
         android:text="Hey there\nPlease choose one of the options here:"
+        android:textColor="@color/pink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
