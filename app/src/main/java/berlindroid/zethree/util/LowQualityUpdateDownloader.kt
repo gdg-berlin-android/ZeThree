@@ -35,7 +35,7 @@ object LowQualityUpdateDownloader {
                 .filter { release: Release -> release.assets.stream().anyMatch(isApk) }
                 .sorted(Comparator.comparing { o: Release -> o.publishedAt })
                 .map { release: Release ->
-                    val apkUrl = release.assets.stream().filter(isApk).findFirst().get().url
+                    val apkUrl = release.assets.stream().filter(isApk).findFirst().get().downloadUrl
                     val appVersion = release.tag.replaceFirst("v".toRegex(), "")
                     Pair(apkUrl, appVersion)
                 }
@@ -112,7 +112,7 @@ object LowQualityUpdateDownloader {
     @JsonIgnoreProperties(ignoreUnknown = true)
     private data class Asset(
         @JsonProperty("browser_download_url")
-        val url: String,
+        val downloadUrl: String,
 
         @JsonProperty("content_type")
         val contentType: String
