@@ -101,5 +101,14 @@
         android:onClick="onChetClicked"
         android:text="Add Chet" />
 
+    <include
+        android:id="@+id/troll"
+        layout="@layout/layout_troll"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/flutter_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
